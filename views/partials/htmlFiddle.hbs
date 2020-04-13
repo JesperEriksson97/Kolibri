@@ -1,0 +1,55 @@
+
+<div id="editor" onload="update">
+
+</div>
+
+<iframe id="terminal" frameborder="0">
+
+</iframe>
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.9/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    function update() {
+        var idoc = document.getElementById('terminal').contentWindow.document
+        idoc.open()
+        idoc.write(editor.getValue())
+        idoc.close()
+    }
+
+    function setUpEditor() {
+        window.editor = ace.edit("editor")
+        editor.setTheme("ace/theme/monokai")
+        editor.session.setMode("ace/mode/html")
+        editor.setValue(`
+<!DOCTYPE html>
+<html>
+<head>
+<title>Title of the document</title>
+</head>
+
+<body>
+<h1 id="demotext"> Hi! Im a fiddle, try me out! </h1>
+<button type="button" onclick="changeText();"> Click me! </button>
+
+<script>
+    function changeText() { 
+        document.getElementById("demotext")
+        .textContent = "You just ran some JavaScript!" 
+    }
+<\/script>
+
+</body>
+
+</html>
+`)
+
+        editor.getSession().on('change', function() {
+            update()
+        })
+
+        document.getElementById('editor').style.fontSize='14px';
+    }
+
+    setUpEditor()
+    update()
+</script>

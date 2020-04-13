@@ -11,6 +11,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "ace-builds": "^1.4.9",
     "express": "^4.17.1",
     "express-hbs": "^2.3.0"
   },
