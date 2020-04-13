@@ -20,6 +20,6 @@ app.use('/collaborators', require('./routes/collaboratorsRouter'))
 app.use('/contact', require('./routes/contactRouter'))
 app.use('/about', require('./routes/aboutRouter'))
 
-app.listen(4000, () => {
+app.listen(80, () => {
     console.log('application is listening on port 4000')
 })
