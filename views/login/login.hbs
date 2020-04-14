@@ -6,6 +6,12 @@
                         <h3>Login Form</h3>
                         <p>Login to access your dashboard</p>
                     </div>
+                    {{#if success_msg}}
+                        <div class="alert alert-success alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        {{success_msg}}
+                        </div>
+                    {{/if}}
                     <!--Email Input-->
                     <div class="form-group">
                         <input type="text" name="email" class="form-input" placeholder="email@example.com">

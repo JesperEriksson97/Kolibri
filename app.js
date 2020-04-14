@@ -1,5 +1,4 @@
 const express = require('express')
-const { check, validationResult } = require('express-validator');
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const flash = require('connect-flash')
@@ -30,6 +29,13 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false}))
 app.use(cookieParser())
 
+// Express Session
+app.use(session({
+  secret: 'averysecretstring',
+  saveUninitialized: true,
+  resave: true
+}))
+
 // Connect Flash
 app.use(flash())
 
@@ -41,12 +47,9 @@ app.use(function (req, res, next) {
   next()
 })
 
-// Express Session
-app.use(session({
-  secret: 'averysecretstring',
-  saveUninitialized: true,
-  resave: true
-}))
+// Passport Init
+app.use(passport.initialize())
+app.use(passport.session())
 
 // Handlebars
 app.engine('hbs', hbs.express4({

@@ -1,20 +1,37 @@
 {{> head}}
+
 <body id="login-body">
     <div class="wrap">
+
         <form class="login-form" method="POST" action="/register/registerUser">
+        
                     <div class="form-header">
                         <h3>Register</h3>
                         <p>Register a new account</p>
                     </div>
+                    {{#if error}}
+                        <div class="alert alert-warning alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Warning!</strong> {{error}}
+                        </div>
+                    {{/if}}
                     <!--Email Input-->
                     <div class="form-group">
                         <input type="text" name="email" class="form-input" placeholder="email@example.com">
                     </div>
-                    <!--Password Input-->
+                    <!--Name Input-->
+                    <div class="form-group">
+                        <input type="text" name="name" class="form-input" placeholder="John">
+                    </div>
+                     <!--Lastname Input-->
+                    <div class="form-group">
+                        <input type="text" name="lastname" class="form-input" placeholder="Doe">
+                    </div>
+                     <!--Password Input-->
                     <div class="form-group">
                         <input type="password" name="password" class="form-input" placeholder="password">
                     </div>
-                    <!--Login Button-->
+                    <!--Register Button-->
                     <div class="form-group">
                         <button class="form-button" type="submit">Register</button>
                     </div>
