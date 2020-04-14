@@ -27,6 +27,8 @@ app.use('/projects', require('./routes/projectsRouter'))
 app.use('/collaborators', require('./routes/collaboratorsRouter'))
 app.use('/contact', require('./routes/contactRouter'))
 app.use('/about', require('./routes/aboutRouter'))
+app.use('/login', require('./routes/loginRouter'))
+app.use('/register', require('./routes/registerRouter'))
 
 // Socket Setup
 
