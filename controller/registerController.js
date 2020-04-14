@@ -1,4 +1,4 @@
-const { check, validationResult } = require('express-validator');
+// const { check, validationResult } = require('express-validator');
 const registerController = {}
 const User = require('../model/User')
 
@@ -11,10 +11,10 @@ registerController.registerUser = (req, res) => {
 
     const email = req.body.email
     const password = req.body.password
-    const name = req.body.name
+    const username = req.body.username
     const lastname = req.body.lastname
 
-    if(email.length <= 0 || password.length < 0 || name.length <= 0 || lastname.length <= 0) {
+    if(email.length <= 0 || password.length < 0 || username.length <= 0 || lastname.length <= 0) {
         res.render('register/register', {error: 'All fields needs to be filled in'})
     } else if(password.length < 7) {
         res.render('register/register', {error: 'Your password needs to be atleast 7 characters long'})
@@ -23,7 +23,7 @@ registerController.registerUser = (req, res) => {
     } else {
         const newUser = new User({
             email: email,
-            name: name,
+            username: username,
             lastname: lastname,
             password: password
         })
