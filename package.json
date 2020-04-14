@@ -13,7 +13,8 @@
   "dependencies": {
     "ace-builds": "^1.4.9",
     "express": "^4.17.1",
-    "express-hbs": "^2.3.0"
+    "express-hbs": "^2.3.0",
+    "mongoose": "^5.9.9"
   },
   "devDependencies": {
     "nodemon": "^2.0.3"
