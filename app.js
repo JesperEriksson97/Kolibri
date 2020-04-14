@@ -1,8 +1,17 @@
 const express = require('express')
+const { check, validationResult } = require('express-validator');
+const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
+const flash = require('connect-flash')
+const session = require('express-session')
+const passport = require('passport')
+const LocalStrategy = require('passport-local').Strategy
 const { join } = require('path')
 const mongoose = require('mongoose')
 const hbs = require('express-hbs')
 const app = express()
+const path = require('path')
+
 
 // Database Set Up
 const db = require('./configs/keys').mongoURI
@@ -15,6 +24,29 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.static(__dirname + '/public')); // Lets us refer to the css file
 app.set('view engine', 'hbs')
 app.set('views', join(__dirname, 'views'))
+
+// BodyParser Middleware
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false}))
+app.use(cookieParser())
+
+// Connect Flash
+app.use(flash())
+
+// Global Vars
+app.use(function (req, res, next) {
+  res.locals.succes_msg = req.flash('success_msg')
+  res.locals.error_msg = req.flash('error_msg')
+  res.locals.error = req.flash('error') // To coop with passport
+  next()
+})
+
+// Express Session
+app.use(session({
+  secret: 'averysecretstring',
+  saveUninitialized: true,
+  resave: true
+}))
 
 // Handlebars
 app.engine('hbs', hbs.express4({
