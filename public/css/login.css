@@ -17,14 +17,14 @@ html{
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #fafafa;
+    background: rgb(46, 46, 46);
 }
 .login-form{
     width: 350px;
     margin: 0 auto;
     border: 1px solid #ddd;
     padding: 2rem;
-    background: #ffffff;
+    background: rgb(121, 121, 121);
 }
 .form-input{
     background: #fafafa;
@@ -36,7 +36,7 @@ html{
     margin-bottom: 1rem;
 }
 .form-button{
-    background: #69d2e7;
+    background: rgb(46, 46, 46);
     border: 1px solid #ddd;
     color: #ffffff;
     padding: 10px;
@@ -44,7 +44,7 @@ html{
     text-transform: uppercase;
 }
 .form-button:hover{
-    background: #69c8e7;
+    background: rgb(214, 214, 214);
 }
 .form-header{
     text-align: center;

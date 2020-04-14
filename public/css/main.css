@@ -2,7 +2,8 @@
 selectors). */
 body {
     margin: 25px;
-    background-color: rgb(240,240,240);
+    background: rgb(46, 46, 46);
+    color: white;
     font-family: arial, sans-serif;
     font-size: 14px;
   }
