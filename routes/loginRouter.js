@@ -39,7 +39,6 @@ passport.deserializeUser(function(id, done) {
 
 router.get('/', loginController.renderLogin)
 router.post('/validate', passport.authenticate('local', {successRedirect: '/', failureRedirect: '/login', failureFlash: true}), function(req, res) { // This one is being called
-    res.render('login/login')
 })
 
 module.exports = router
