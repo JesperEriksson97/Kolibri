@@ -4,5 +4,9 @@
   <a href="/collaborators">Collaborators</a>
   <a href="/contact">Contact</a>
   <a href="/about">About</a>
+  {{#if user}}
+  <a href="/logout">Log out</a>
+  {{else}}
   <a href="/login" id="loginButton">Log in</a>
+  {{/if}}
 </div>

@@ -2,4 +2,12 @@
 <h1>Hi, Welcome to CodeView</h1>
 
 {{> navbar}}
-<h2>This is projects</h2
+<h2>Your projects</h2>
+
+<ul id="user-projects-list">
+    {{#each userProjects}}
+    <li>
+        <div><a href=":{{userProjects._id}}/edit">{{userProjects.name}}</a>}</div>
+    </li>
+    {{/each}}
+</ul>
