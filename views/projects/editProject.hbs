@@ -1,18 +1,23 @@
 {{> head}}
+<h1>Hi, Welcome to CodeView</h1>
+{{> navbar}}
+
+<h1>{{fiddle.name}}</h1>
+<a href="/projects/:{{fiddle._id}}/addCollab">Add collaborator to project</a>
 <div id="editor" onload="update">
 
 </div>
-
 <iframe id="terminal" frameborder="1" style="background: white">
 
 </iframe>
-    
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.9/ace.js" type="text/javascript" charset="utf-8"></script>
 <script>
     function update() {
         var idoc = document.getElementById('terminal').contentWindow.document
         idoc.open()
         idoc.write(editor.getValue())
+        // Here we are gonna save the data to the database with sockets!
         idoc.close()
     }
 
@@ -20,34 +25,12 @@
         window.editor = ace.edit("editor")
         editor.setTheme("ace/theme/monokai")
         editor.session.setMode("ace/mode/html")
-        editor.setValue(`
-<!DOCTYPE html>
-<html>
-<head>
-<title>Title of the document</title>
-<style>
-   
-</style>
-</head>
-
-<body>
-<h1 id="demotext"> Hi! Im a fiddle, try me out! </h1>
-<button type="button" onclick="changeText();"> Click me! </button>
-
-<script>
-    function changeText() { 
-        document.getElementById("demotext")
-        .textContent = "You just ran some JavaScript!" 
-    }
-<\/script>
-
-</body>
-
-</html>
-`)
+        editor.setValue(`{{fiddle.data}}`)
 
         editor.getSession().on('change', function() {
             update()
+            // Here we should also update to database
+            // Send out socket.io broadcast
         })
 
         document.getElementById('editor').style.fontSize='14px';

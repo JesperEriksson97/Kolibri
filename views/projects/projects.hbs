@@ -4,10 +4,13 @@
 {{> navbar}}
 <h2>Your projects</h2>
 
+<div>
+    <a href="/projects/createProject">Create New Project</a>
+</div>
 <ul id="user-projects-list">
-    {{#each userProjects}}
+    {{#each fiddles}}
     <li>
-        <div><a href=":{{userProjects._id}}/edit">{{userProjects.name}}</a>}</div>
+        <div><a href="projects/{{this._id}}/edit">{{this.name}}</a></div>
     </li>
     {{/each}}
 </ul>

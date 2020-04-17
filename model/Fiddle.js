@@ -11,7 +11,7 @@ const FiddleSchema = new mongoose.Schema({
     required: true
   },
   collaborators: {
-    type: String,
+    type: Array,
     required: true
   },
   data: {
