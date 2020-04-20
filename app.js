@@ -4,13 +4,17 @@ const bodyParser = require('body-parser')
 const flash = require('connect-flash')
 const session = require('express-session')
 const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy
 const { join } = require('path')
 const mongoose = require('mongoose')
 const hbs = require('express-hbs')
-const app = express()
 const path = require('path')
-const socket = require('socket.io')
+const socketio = require('socket.io')
+const http = require('http')
+
+const app = express()
+const LocalStrategy = require('passport-local').Strategy
+const server = http.createServer(app)
+const io = socketio(server)
 
 app.use(session({
   secret: 'averysecretstring',
@@ -66,14 +70,27 @@ app.use('/login', require('./routes/loginRouter'))
 app.use('/logout', require('./routes/logoutRouter'))
 app.use('/register', require('./routes/registerRouter'))
 
+// Socket Setup
+const Fiddle = require('./model/Fiddle')
+io.on('connection', (socket) => {
+  console.log('New connection made with id: ', socket.id)
+
+  socket.on('update', (data) => {
+    console.log(data)
+    // Save data to mongoDB here
+    Fiddle.findOneAndUpdate({_id: data._id}, {data: data.data}, {new: true}).then((updatedFiddle) => {
+      io.emit('editorUpdate', updatedFiddle) // Sent data to client here
+    }).catch((err) => console.log(err))
+    
+  })
+
+  socket.emit('message', 'Hello World')
+})
+
 // Server Set Up
-const io = app.listen(80, () => {
+server.listen(80, () => {
     console.log('application is listening on port 80')
 })
 
-// Socket Setup
-io.on('connection', function(socket) {
-  console.log('made socket connection: ', socket.id)
-})
 
 

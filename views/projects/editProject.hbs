@@ -12,7 +12,23 @@
 </iframe>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.9/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="/socket.io/socket.io.js"></script>
+<!-- <script src="js/main.js"></script> -->
 <script>
+
+    const socket = io();
+
+    function saveToDataBase(_id) { 
+        socket.emit('update', {data: editor.getValue(), _id: _id})  
+    }   
+
+    socket.on('editorUpdate', (updatedData) => {
+        console.log(updatedData)
+        // This should be called from the server after a 'change' has been made
+        editor.setValue(updatedData.data)
+        editor.clearSelection()
+    })
+
     function update() {
         var idoc = document.getElementById('terminal').contentWindow.document
         idoc.open()
@@ -26,11 +42,17 @@
         editor.setTheme("ace/theme/monokai")
         editor.session.setMode("ace/mode/html")
         editor.setValue(`{{fiddle.data}}`)
+        editor.highlightActiveLine
 
+        // EVERY TIME WE WRITE SAVE IT TO UPDATE
         editor.getSession().on('change', function() {
+            if (editor.curOp && editor.curOp.command.name) {
+               console.log("user change") 
+               saveToDataBase(`{{fiddle._id}}`)
+               update()
+            } 
+            else 
             update()
-            // Here we should also update to database
-            // Send out socket.io broadcast
         })
 
         document.getElementById('editor').style.fontSize='14px';

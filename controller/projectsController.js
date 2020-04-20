@@ -12,6 +12,12 @@ projectsController.createProject = (req, res) => {
     res.render('projects/createProject', {user: req.user})
 }
 
+projectsController.updateProject = (req, res, newData, id) => {
+    Fiddle.findOneAndUpdate({_id : id}, {data: newData}).then(() => {
+        console.log('data updated')
+    })
+}
+
 projectsController.saveProject = (req, res) => {
     // This function should constantly save the fiddle and send it to the database.
     console.log(req.body)
