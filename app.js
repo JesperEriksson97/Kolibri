@@ -10,6 +10,7 @@ const mongoose = require('mongoose')
 const hbs = require('express-hbs')
 const app = express()
 const path = require('path')
+const socket = require('socket.io')
 
 app.use(session({
   secret: 'averysecretstring',
@@ -65,9 +66,14 @@ app.use('/login', require('./routes/loginRouter'))
 app.use('/logout', require('./routes/logoutRouter'))
 app.use('/register', require('./routes/registerRouter'))
 
-// Socket Setup
-
 // Server Set Up
-app.listen(80, () => {
+const io = app.listen(80, () => {
     console.log('application is listening on port 80')
 })
+
+// Socket Setup
+io.on('connection', function(socket) {
+  console.log('made socket connection: ', socket.id)
+})
+
+

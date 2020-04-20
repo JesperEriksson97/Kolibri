@@ -5,3 +5,12 @@
 {{/if}}
 {{> navbar}}
 {{> htmlFiddle}}
+
+<script>
+    function socketSetup() {
+        const socket = io.connect('http://localhost:80')
+    }
+
+    socketSetup()
+    
+</script>
