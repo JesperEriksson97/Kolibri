@@ -18,14 +18,15 @@
 
     const socket = io();
 
-    function saveToDataBase(_id) { 
-        socket.emit('update', {data: editor.getValue(), _id: _id})  
+    function saveToDataBase(_id, cursor) { 
+        socket.emit('update', {data: editor.getValue(), _id: _id, cursor: cursor})  
     }   
 
-    socket.on('editorUpdate', (updatedData) => {
-        console.log(updatedData)
+    socket.on('editorUpdate', (data) => {
+        console.log(data.cursor)
         // This should be called from the server after a 'change' has been made
-        editor.setValue(updatedData.data)
+        editor.setValue(data.updatedFiddle.data)
+        editor.selection.moveTo(data.cursor.row, data.cursor.column + 1)
         editor.clearSelection()
     })
 
@@ -41,16 +42,18 @@
         window.editor = ace.edit("editor")
         editor.setTheme("ace/theme/monokai")
         editor.session.setMode("ace/mode/html")
+        editor.selection.moveTo({{fiddle.cursor.row}}, {{fiddle.cursor.column}})
         editor.setValue(`{{fiddle.data}}`)
         editor.highlightActiveLine
 
         // EVERY TIME WE WRITE SAVE IT TO UPDATE
         editor.getSession().on('change', function() {
+            // Checks if a user is manually changing the ace editor
             if (editor.curOp && editor.curOp.command.name) {
                console.log("user change") 
-               saveToDataBase(`{{fiddle._id}}`)
+               saveToDataBase(`{{fiddle._id}}`, editor.getCursorPosition())
                update()
-            } 
+            }
             else 
             update()
         })

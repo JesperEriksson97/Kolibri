@@ -73,13 +73,13 @@ app.use('/register', require('./routes/registerRouter'))
 // Socket Setup
 const Fiddle = require('./model/Fiddle')
 io.on('connection', (socket) => {
-  console.log('New connection made with id: ', socket.id)
+  // console.log('New connection made with id: ', socket.id)
 
   socket.on('update', (data) => {
-    console.log(data)
+    console.log('This is the cursor position goming in: ', data.cursor)
     // Save data to mongoDB here
-    Fiddle.findOneAndUpdate({_id: data._id}, {data: data.data}, {new: true}).then((updatedFiddle) => {
-      io.emit('editorUpdate', updatedFiddle) // Sent data to client here
+    Fiddle.findOneAndUpdate({_id: data._id}, {data: data.data, cursor: data.cursor}, {new: true}).then((updatedFiddle) => {
+      io.emit('editorUpdate', {updatedFiddle: updatedFiddle, cursor: updatedFiddle.cursor}) // Sent data to client here
     }).catch((err) => console.log(err))
     
   })

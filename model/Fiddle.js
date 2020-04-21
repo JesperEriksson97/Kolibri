@@ -17,6 +17,9 @@ const FiddleSchema = new mongoose.Schema({
   data: {
     type: String,
     required: true
+  },
+  cursor: {
+    type: Object
   }
 })
 
