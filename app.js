@@ -77,7 +77,7 @@ io.on('connection', (socket) => {
 
   socket.on('update', (data) => {
     console.log('This is the cursor position goming in: ', data.cursor)
-    // Save data to mongoDB here
+    // Update data to mongoDB here
     Fiddle.findOneAndUpdate({_id: data._id}, {data: data.data, cursor: data.cursor}, {new: true}).then((updatedFiddle) => {
       io.emit('editorUpdate', {updatedFiddle: updatedFiddle, cursor: updatedFiddle.cursor}) // Sent data to client here
     }).catch((err) => console.log(err))

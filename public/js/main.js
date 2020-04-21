@@ -2,7 +2,7 @@ const socket = io();
 window.editor = ace.edit("editor")
 
 // Function that updates the editor
-function update() {
+/*function update() {
     var idoc = document.getElementById('terminal').contentWindow.document
     idoc.open()
     idoc.write(editor.getValue())

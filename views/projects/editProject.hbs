@@ -18,10 +18,18 @@
 
     const socket = io();
 
+    // Called to App.js
     function saveToDataBase(_id, cursor) { 
         socket.emit('update', {data: editor.getValue(), _id: _id, cursor: cursor})  
     }   
 
+    // Called from App.js
+    /**
+    Problems:
+    - I tend trigget 'change' events just before the editor can sense a change in the cursor sometimes leading to the change of the cursor not registrating
+    - When I load the data via mongoose the < > / \ is being seen as &lt; and &gt; etc. This is good for safety reason but should be reverted in the intial setUpEditor() method
+    - I dont want to show my functions on the client so I need to move these into main.js and make it work.
+    */
     socket.on('editorUpdate', (data) => {
         console.log(data.cursor)
         // This should be called from the server after a 'change' has been made
@@ -34,7 +42,6 @@
         var idoc = document.getElementById('terminal').contentWindow.document
         idoc.open()
         idoc.write(editor.getValue())
-        // Here we are gonna save the data to the database with sockets!
         idoc.close()
     }
 
